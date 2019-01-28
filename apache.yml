@@ -1,0 +1,23 @@
+- hosts: all
+  become: true
+  tasks: 
+  - name: install apache server
+    yum:
+      name: httpd
+      state: present
+  - name: Enable apache on reboot and start
+    service:
+         name: httpd
+         enabled: yes
+         state: started
+  - name: Deploy the project on apache
+    copy:
+       src: index.html
+       dest: /var/www/html/index.html
+    notify:
+        - Restart apache
+  handlers:
+    - name: Restart apache
+      service:
+        name: httpd
+        state: restarted        

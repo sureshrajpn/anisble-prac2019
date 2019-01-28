@@ -1,0 +1,13 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: crete users
+      user:
+         name: "{{item.name}}"  
+         group: "{{item.group}}"
+      loop:
+          - {name: 'Suresh',  group: 'ec2-user'}     
+          - {name: 'Rajitha', group: 'ec2-user'}
+     
+        
